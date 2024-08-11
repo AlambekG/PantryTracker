@@ -18,16 +18,42 @@
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+/* styles/globals.css */
+body {
+  background-color: rgb(152, 230, 153);
+  margin: 0;
+  font-family: Arial, sans-serif;
+  color: rgb(66, 64, 64);
+}
+
+header {
+  padding: 20px;
+  color: white;
+}
+
+nav a {
+  color: white;
+  margin-right: 15px;
+  text-decoration: none;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
+
+footer {
+  text-align: center;
+  padding: 10px;
+  background-color: #f1f1f1;
+  position: fixed;
+  width: 100%;
+  bottom: 0;
 }
