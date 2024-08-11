@@ -1,5 +1,16 @@
 "use client";
-import { useState } from 'react';
+import { useState, useEffect } from 'react'
+// import { Box, Stack, Typography, Button, Modal, TextField } from '@mui/material'
+// import { firestore } from '@/firebase'
+// import {
+//   collection,
+//   doc,
+//   getDocs,
+//   query,
+//   setDoc,
+//   deleteDoc,
+//   getDoc,
+// } from 'firebase/firestore'
 import styles from '../styles/HomePage.module.css';
 
 interface Item {
@@ -18,6 +29,7 @@ export default function Home() {
   const [name, setName] = useState('');
   const [quantity, setQuantity] = useState<number>(0);
 
+  
   const addItem = (e: React.FormEvent) => {
     e.preventDefault();
     const newItem = { id: Date.now(), name, quantity };
