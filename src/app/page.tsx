@@ -25,7 +25,7 @@ let initialItems: Item[] = [
 ];
 
 export default function Home() {
-  const [items, setItems] = useState([]);
+  const [items, setItems] = useState<any[]>([]);
   const [name, setName] = useState('');
   const [quantity, setQuantity] = useState('');
 
@@ -67,6 +67,7 @@ export default function Home() {
       const { quantity } = docSnap.data()
       await deleteDoc(docRef)
     }
+    // @ts-ignore
     const updatedItems = items.filter(item => item.name !== name);
     setItems(updatedItems);
     // await updateInventory()
