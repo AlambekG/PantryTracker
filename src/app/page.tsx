@@ -1,46 +1,75 @@
 "use client";
 import { useState, useEffect } from 'react'
-// import { Box, Stack, Typography, Button, Modal, TextField } from '@mui/material'
-// import { firestore } from '@/firebase'
-// import {
-//   collection,
-//   doc,
-//   getDocs,
-//   query,
-//   setDoc,
-//   deleteDoc,
-//   getDoc,
-// } from 'firebase/firestore'
+import { Box, Stack, Typography, Button, Modal, TextField } from '@mui/material'
+import {
+  collection,
+  doc,
+  getDocs,
+  query,
+  setDoc,
+  deleteDoc,
+  getDoc,
+} from 'firebase/firestore'
 import styles from '../styles/HomePage.module.css';
+import { db } from './firebase'
 
 interface Item {
   id: number;
   name: string;
-  quantity: number;
+  quantity: string;
 }
 
 let initialItems: Item[] = [
-  { id: 1, name: 'Apple', quantity: 10 },
-  { id: 2, name: 'Banana', quantity: 5 }
+  { id: 1, name: 'Apple', quantity: '10' },
+  { id: 2, name: 'Banana', quantity: '5' }
 ];
 
 export default function Home() {
-  const [items, setItems] = useState<Item[]>(initialItems);
+  const [items, setItems] = useState([]);
   const [name, setName] = useState('');
-  const [quantity, setQuantity] = useState<number>(0);
+  const [quantity, setQuantity] = useState('');
 
+  const updateInventory = async () => {
+    const snapshot = query(collection(db, 'inventory'))
+    const docs = await getDocs(snapshot)
+    const inventoryList:any = []
+    docs.forEach((doc) => {
+      inventoryList.push({ name: doc.id, ...doc.data() })
+    })
+    setItems(inventoryList)
+  }
   
-  const addItem = (e: React.FormEvent) => {
-    e.preventDefault();
-    const newItem = { id: Date.now(), name, quantity };
-    setItems([...items, newItem]);
-    setName('');
-    setQuantity(0);
+  useEffect(() => {
+    updateInventory()
+  }, [])
+
+  const addItem = async (e: React.FormEvent) => {
+    e.preventDefault()
+    const docRef = doc(collection(db, 'inventory'), name)
+    const docSnap = await getDoc(docRef)
+    if (docSnap.exists()) {
+      const { quantity } = docSnap.data()
+      await setDoc(docRef, { quantity: quantity + 1 })
+    } else {
+      await setDoc(docRef, { quantity: quantity })
+    }
+    setItems((prevItems):any => [
+      ...prevItems,
+      { name: name, quantity: quantity }
+    ]);
+    // await updateInventory()
   };
 
-  const deleteItem = (id: number) => {
-    const updatedItems = items.filter(item => item.id !== id);
+  const deleteItem = async (name: string) => {
+    const docRef = doc(collection(db, 'inventory'), name)
+    const docSnap = await getDoc(docRef)
+    if (docSnap.exists()) {
+      const { quantity } = docSnap.data()
+      await deleteDoc(docRef)
+    }
+    const updatedItems = items.filter(item => item.name !== name);
     setItems(updatedItems);
+    // await updateInventory()
   };
 
   return (
@@ -62,7 +91,7 @@ export default function Home() {
           <input
             type="number"
             value={quantity}
-            onChange={e => setQuantity(Number(e.target.value))}
+            onChange={e => setQuantity(e.target.value)}
             required
             className={styles.formInput}
           />
@@ -71,9 +100,9 @@ export default function Home() {
       </form>
       <ul className={styles.itemList}>
         {items.map(item => (
-          <li key={item.id} className={styles.item}>
+          <li key={item.name} className={styles.item}>
             {item.name} - {item.quantity}
-            <button onClick={() => deleteItem(item.id)} className={styles.itemButton}>Delete</button>
+            <button onClick={() => deleteItem(item.name)} className={styles.itemButton}>Delete</button>
           </li>
         ))}
       </ul>
