@@ -27,6 +27,8 @@ export default function ImageUploader({onUpload}) {
 
   useEffect(() => {
     onUpload(image);
+    setShowCamera(false);
+    console.log(showCamera)
   }, [image])
 
   return (
@@ -40,19 +42,26 @@ export default function ImageUploader({onUpload}) {
         />
       </label>
       <label className={styles.photoShoot}>
-        <button onClick={()=> setShowCamera(true)}> Take a photo </button>
-        {image && <img src={image} alt="Captured" className={styles.capturedImage} />}
-        {showCamera && 
-        <>
-          <Camera
-            ref={camera}
-            aspectRatio={16 / 9}
-            className={styles.camera}
-          />
-          <button onClick={photoShoot}> <span>&#128247;</span> </button>
-        </> 
-        }
+        <button onClick={() => setShowCamera(true)}> Take a photo </button>
       </label>
+      <div className={styles.camera}>
+        {showCamera ? (
+            <>
+              <Camera ref={camera} aspectRatio={16 / 9} />
+              <button onClick={photoShoot}>
+                <span>&#128247;</span>
+              </button>
+            </>
+          ) : (
+            image && (
+              <img
+                src={image}
+                alt="Captured"
+                className={styles.capturedImage}
+              />
+            )
+          )}
+        </div>
     </div>
   );
 }

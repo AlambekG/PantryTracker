@@ -15,7 +15,7 @@ const encodeImageToBase64 = (imageFile) => {
 };
 
 export const openaiRes = async (imageFile) => {
-  console.log(imageFile)
+  // console.log(imageFile)
   try{
     const base64Image = await encodeImageToBase64(imageFile);
     const response = await openai.chat.completions.create({

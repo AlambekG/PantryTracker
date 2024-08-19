@@ -23,7 +23,7 @@
   height: 40px;
   margin-top: 10px;
 }
-.photoShoot span {
+.camera span {
   font-size:30px
 }
 .photoShoot button {
@@ -40,10 +40,11 @@
 }
 
 .capturedImage {
-  margin-top: 20px;
+  margin-top: 15px;
   width: 100%;
   max-width: 400px;
   border-radius: 8px;
+  margin-bottom: 15px;
 }
 
 .foodRecognition {
