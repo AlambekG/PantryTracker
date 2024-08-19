@@ -15,6 +15,21 @@
   width: 100%;
   max-width: 400px;
 }
+.uploadImage {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #61dafb;
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 400px;
+  margin-bottom: 20px;
+}
 
 .formLabel {
   display: block;
