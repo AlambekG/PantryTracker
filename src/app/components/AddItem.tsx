@@ -19,33 +19,34 @@ interface Item {
   quantity: string;
 }
  // @ts-ignore
-export default function AddItem({setInventory}) {
+ export const addTolist = async (name, quantity, setInventory) => {
+  const docRef = doc(collection(db, 'inventory'), name);
+  const docSnap = await getDoc(docRef);
+  if (docSnap.exists()) {
+    const { quantity } = docSnap.data() as Item;
+    await setDoc(docRef, { quantity: quantity + 1 });
+  } else {
+    await setDoc(docRef, { quantity });
+  }
+  setInventory((prevItems:any) => [
+    ...prevItems,
+    { name: name, quantity: quantity }
+  ]);
+};
+// @ts-ignore
+export function AddItem({setInventory}) {
   const [name, setName] = useState('');
   const [quantity, setQuantity] = useState('');
 
-  const addItem = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    const docRef = doc(collection(db, 'inventory'), name);
-    const docSnap = await getDoc(docRef);
-    if (docSnap.exists()) {
-      const { quantity } = docSnap.data() as Item;
-      await setDoc(docRef, { quantity: quantity + 1 });
-    } else {
-      await setDoc(docRef, { quantity });
-    }
-    setInventory((prevItems:any) => [
-      ...prevItems,
-      { name: name, quantity: quantity }
-    ]);
-
-    setName('');
-    setQuantity('');
-  };
-
   return (
     <div>
-      <form className={styles.formContainer} onSubmit={addItem}>
+      <form className={styles.formContainer} onSubmit={(e) =>{
+        e.preventDefault();
+        addTolist(name, quantity, setInventory);
+        setName('');
+        setQuantity('');
+      }
+      }>
         <label className={styles.formLabel}>
           Name:
           <input

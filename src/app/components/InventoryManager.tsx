@@ -13,8 +13,9 @@ import {
 } from 'firebase/firestore';
 import styles from '../../styles/HomePage.module.css';
 import { db } from '../firebase';
-import AddItem from './AddItem';
+import { AddItem, addTolist } from './AddItem';
 import ImageUploader from './ImageUploader';
+import { openaiRes } from '../imageDetection/openaiService';
 
 interface Item {
   id: number;
@@ -22,7 +23,7 @@ interface Item {
   quantity: string;
 }
 
-export default function Inventory() {
+export default function InventoryManager() {
   const [items, setItems] = useState<Item[]>([]);
 
   const updateInventory = async () => {
@@ -45,10 +46,19 @@ export default function Inventory() {
     setItems((prevItems) => prevItems.filter((item) => item.name !== name));
   };
 
+  const onImageUpload = async (imageFile: any) => {
+    const response = await openaiRes(imageFile);
+    if(response){
+      addTolist(response, 1, setItems);
+    } else {
+      console.error("error recognizing image")
+    }
+  }
+
   return (
     <div>
       <AddItem setInventory={setItems}/>
-      <ImageUploader/>
+      <ImageUploader onUpload={onImageUpload} />
       <ul className={styles.itemList}>
         {items.map((item) => (
           <li key={item.name} className={styles.item}>

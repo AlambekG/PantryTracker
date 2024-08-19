@@ -4,12 +4,12 @@
 import React, { useState } from 'react';
 import styles from '../../styles/HomePage.module.css';
 
-export default function ImageUploader() {
-  const [imageFile, setImageFile] = useState<File | null>(null);
+export default function ImageUploader({onUpload}) {
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
-      setImageFile(e.target.files[0]);
+      console.log("here")
+      onUpload(e.target.files[0])
     }
   };
 
