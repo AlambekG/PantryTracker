@@ -15,7 +15,38 @@
   width: 100%;
   max-width: 400px;
 }
-.uploadImage {
+.photoShoot {
+  display: inline-block;
+  /* background-color: #fff; */
+  color: black;
+  width: 300px;
+  height: 40px;
+  margin-top: 10px;
+}
+.photoShoot span {
+  font-size:30px
+}
+.photoShoot button {
+  font-size: 16px;
+  background-color: #61dafb;
+  border: none;
+  cursor: pointer;
+}
+
+.camera {
+  width: 100%;
+  max-width: 400px;
+  margin-top: 20px;
+}
+
+.capturedImage {
+  margin-top: 20px;
+  width: 100%;
+  max-width: 400px;
+  border-radius: 8px;
+}
+
+.foodRecognition {
   display: inline-block;
   padding: 10px 20px;
   background-color: #61dafb;
