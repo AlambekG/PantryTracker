@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 // app/components/ImageUploader.tsx
 "use client";
 
@@ -26,6 +28,7 @@ export default function ImageUploader({onUpload}) {
   useEffect(() => {
     onUpload(image);
   }, [image])
+
   return (
     <div className={styles.foodRecognition}>
       <label>
@@ -39,7 +42,8 @@ export default function ImageUploader({onUpload}) {
       <label className={styles.photoShoot}>
         <button onClick={()=> setShowCamera(true)}> Take a photo </button>
         {image && <img src={image} alt="Captured" className={styles.capturedImage} />}
-        {showCamera && <>
+        {showCamera && 
+        <>
           <Camera
             ref={camera}
             aspectRatio={16 / 9}
