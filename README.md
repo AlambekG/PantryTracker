@@ -3,14 +3,14 @@ This is a pantry inventory app with camera integration for capturing and trackin
 
 Basic:
 <div style="display: flex; justify-content: space-between;">
-    <img src="/public/screen1.png" alt="Screenshot 1" width="300px">
-    <img src="/public/screen2.png" alt="Screenshot 2" width="300px">
+    <img src="/public/screen1.png" alt="Screenshot 1" width="500px">
+    <img src="/public/screen2.png" alt="Screenshot 2" width="500px">
 </div>
 
 With Camera integration:
 <div style="display: flex; justify-content: space-between;">
-    <img src="/public/screen4.png" alt="Screenshot 3" width="300px">
-    <img src="/public/screen3.png" alt="Screenshot 4" width="300px">
+    <img src="/public/screen4.png" alt="Screenshot 3" width="500px">
+    <img src="/public/screen3.png" alt="Screenshot 4" width="500px">
 </div>
 
 
